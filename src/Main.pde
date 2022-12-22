@@ -9,18 +9,19 @@ final float JUMP_ACCELERATION=600;
 final float LINE_END_SHRINK=1;
 final float MAX_LEG_LENGTH=75;
 final float MAX_COYOTE_TIME=0.05;
-boolean DEBUG=false;
+boolean DEBUG=true;
 
 
 
 final Player player=new Player(960,400);
-final Line[] lines=new Line[]{new Line(0,1080,1920,1080),new Line(0,0,1920,0),new Line(1920,0,1920,1080),new Line(0,0,0,1080),new Line(0,900,500,900),new Line(500,900,500,1080),new Line(500,1000,800,1080),new Line(1720,00,1200,1080),new Line(860,620,1060,620),new Line(860,820,1060,820),new Line(860,620,860,820),new Line(1060,620,1060,820),new Line(0,750,500,750)};
-final Line[] platform=new Line[]{lines[9],lines[10],lines[11],lines[8]};
 
 
 
 float _last_frame_time;
 boolean[] keys=new boolean[256];
+TransformGroup root_group;
+TransformGroup rotating_square;
+TransformGroup moving_platform;
 
 
 
@@ -30,6 +31,24 @@ void setup(){
 	for (int i=0;i<256;i++){
 		keys[i]=false;
 	}
+	root_group=new TransformGroup();
+	root_group.add(new Line(0,1080,1920,1080));
+	root_group.add(new Line(0,0,1920,0));
+	root_group.add(new Line(1920,0,1920,1080));
+	root_group.add(new Line(0,0,0,1080));
+	root_group.add(new Line(0,900,500,900));
+	root_group.add(new Line(500,900,500,1080));
+	root_group.add(new Line(500,1000,800,1080));
+	root_group.add(new Line(1720,00,1200,1080));
+	rotating_square=new TransformGroup();
+	rotating_square.add(new Line(860,620,1060,620));
+	rotating_square.add(new Line(860,820,1060,820));
+	rotating_square.add(new Line(860,620,860,820));
+	rotating_square.add(new Line(1060,620,1060,820));
+	root_group.add(rotating_square);
+	moving_platform=new TransformGroup();
+	moving_platform.add(new Line(0,750,500,750));
+	root_group.add(moving_platform);
 }
 
 
@@ -47,18 +66,15 @@ void draw(){
 	if (keys[' ']){
 		player.jump();
 	}
-	for (Line line:platform){
-		line.rotate(delta_time,960,720);
-	}
-	lines[12].move(sin(time*0.001)*100,cos(time*0.001)*250);
+	// for (Line line:platform){
+	// 	line.rotate(delta_time,960,720);
+	// }
+	// lines[12].move(sin(time*0.001)*100,cos(time*0.001)*250);
 	player.update(delta_time);
-	for (Line line:lines){
-		line.update(delta_time);
-		player.collide(line);
-	}
+	root_group.update(delta_time);
 	player.update_ground_movement();
 	background(0);
-	for (Line line:lines){
+	for (Line line:Line.data){
 		line.draw();
 	}
 	player.draw();

@@ -4,6 +4,8 @@ class Line{
 	static final int TYPE_WALL=2;
 	static final int TYPE_MASK=3;
 
+	static ArrayList<Line> data=new ArrayList<Line>();
+
 	int flags;
 	float x0;
 	float y0;
@@ -14,6 +16,7 @@ class Line{
 	float normal_x;
 	float normal_y;
 	float length;
+	Object _next_child;
 
 
 
@@ -44,6 +47,7 @@ class Line{
 		this.y1-=this.normal_x*LINE_END_SHRINK;
 		this.length=sqrt((this.x1-this.x0)*(this.x1-this.x0)+(this.y1-this.y0)*(this.y1-this.y0));
 		this._calculate_type();
+		Line.data.add(this);
 	}
 
 
