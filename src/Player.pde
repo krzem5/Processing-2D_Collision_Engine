@@ -7,8 +7,6 @@ class Player{
 	private float _ay;
 	private float _vx;
 	private float _vy;
-	private boolean _reset_velocity_x;
-	private boolean _reset_velocity_y;
 	private Line _ground_line;
 	private float _ground_vx;
 	private float _ground_vy;
@@ -29,8 +27,6 @@ class Player{
 		this._ay=0;
 		this._vx=0;
 		this._vy=0;
-		this._reset_velocity_x=false;
-		this._reset_velocity_y=false;
 		this._ground_line=null;
 		this._ground_vx=0;
 		this._ground_vy=0;
@@ -69,12 +65,6 @@ class Player{
 				this._ground_vy=0;
 			}
 		}
-		if (this._reset_velocity_x){
-			this._vx=0;
-		}
-		if (this._reset_velocity_y){
-			this._vy=0;
-		}
 		this._vx=(this._vx+this._ax*delta_time)*(this.on_ground?FRICTION:AIR_FRICTION);
 		this._vy+=this._ay*delta_time;
 		float m=this._vx*this._vx+this._vy*this._vy;
@@ -89,26 +79,8 @@ class Player{
 		this.on_ground=false;
 		this._ax=0;
 		this._ay=GRAVITY;
-		this._reset_velocity_x=false;
-		this._reset_velocity_y=false;
 		this._leg_left_y=this.y+MAX_LEG_LENGTH;
 		this._leg_right_y=this.y+MAX_LEG_LENGTH;
-	}
-
-
-
-	void update_ground_movement(){
-		// if (this._ground_line!=null){
-		// 	Vector velocity=this._ground_line.get_velocity(this.x);
-		// 	this.x+=velocity.x;
-		// 	this.y+=velocity.y;
-		// 	this._leg_left_y+=velocity.y;
-		// 	this._leg_right_y+=velocity.y;
-		// 	this._ground_vx=velocity.x;
-		// 	this._ground_vy=velocity.y;
-		// }
-		this._ax+=this._speed_x;
-		this._ay+=this._speed_y*(this._ground_line!=null&&(this._ground_line.flags&Line.TYPE_MASK)==Line.TYPE_SLOPE?-this._ground_line.normal_y:1);
 		if (this.y>height){
 			this.x=width/2;
 			this.y=height/2;
@@ -119,6 +91,8 @@ class Player{
 			this._leg_left_y=this.y+MAX_LEG_LENGTH;
 			this._leg_right_y=this.y+MAX_LEG_LENGTH;
 		}
+		this._ax+=this._speed_x;
+		this._ay+=this._speed_y*(this._ground_line!=null&&(this._ground_line.flags&Line.TYPE_MASK)==Line.TYPE_SLOPE?-this._ground_line.normal_y:1);
 		this._speed_x=0;
 		this._speed_y=0;
 		this._ground_line=null;

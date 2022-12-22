@@ -70,7 +70,6 @@ void draw(){
 	moving_platform.translate(sin(time*0.001)*100,cos(time*0.001)*250);
 	player.update(delta_time);
 	root_group.update(delta_time,null);
-	player.update_ground_movement();
 	background(0);
 	for (Line line:Line.data){
 		line.draw();
