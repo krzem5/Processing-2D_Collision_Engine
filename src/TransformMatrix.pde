@@ -59,9 +59,9 @@ class TransformMatrix{
 		float c=cos(angle);
 		this.data[0]=c;
 		this.data[1]=-s;
-		this.data[2]=-ox*c+oy*s+ox;
+		this.data[2]=ox*(1-c)+oy*s;
 		this.data[3]=s;
 		this.data[4]=c;
-		this.data[5]=-ox*s-oy*c+oy;
+		this.data[5]=oy*(1-c)-ox*s;
 	}
 }

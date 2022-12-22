@@ -66,8 +66,6 @@ void draw(){
 	if (keys[' ']){
 		player.jump();
 	}
-	// root_group.rotate(sin(time*0.001)*0.1,960,540);
-	root_group.translate(0,sin(time*0.001)*50-50);
 	rotating_square.rotate(time*0.001,960,720);
 	moving_platform.translate(sin(time*0.001)*100,cos(time*0.001)*250);
 	player.update(delta_time);
