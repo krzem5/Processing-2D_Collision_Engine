@@ -16,7 +16,8 @@ class Line{
 	float normal_x;
 	float normal_y;
 	float length;
-	Object _next_child;
+	int _next_child;
+	int _id;
 	private float _base_x0;
 	private float _base_y0;
 	private float _base_x1;
@@ -33,6 +34,8 @@ class Line{
 		this._base_x1=x1;
 		this._base_y1=y1;
 		this.update_matrix(new TransformMatrix());
+		this._next_child=0xffffffff;
+		this._id=Line.data.size();
 		Line.data.add(this);
 	}
 
