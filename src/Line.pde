@@ -11,8 +11,6 @@ class Line{
 	float y0;
 	float x1;
 	float y1;
-	float vx;
-	float vy;
 	float normal_x;
 	float normal_y;
 	float length;
@@ -22,18 +20,17 @@ class Line{
 	private float _base_y0;
 	private float _base_x1;
 	private float _base_y1;
+	private TransformMatrix _last_matrix;
 
 
 
 	Line(float x0,float y0,float x1,float y1){
 		this.flags=0;
-		this.vx=0;
-		this.vy=0;
 		this._base_x0=x0;
 		this._base_y0=y0;
 		this._base_x1=x1;
 		this._base_y1=y1;
-		this.update_matrix(new TransformMatrix());
+		this.update(new TransformMatrix());
 		this._next_child=0xffffffff;
 		this._id=Line.data.size();
 		Line.data.add(this);
@@ -41,7 +38,7 @@ class Line{
 
 
 
-	void update_matrix(TransformMatrix matrix){
+	void update(TransformMatrix matrix){
 		Vector p0=matrix.multiply(this._base_x0,this._base_y0);
 		Vector p1=matrix.multiply(this._base_x1,this._base_y1);
 		if (p1.x<p0.x||(p0.x==p1.x&&p1.y<p0.y)){
@@ -72,6 +69,7 @@ class Line{
 		else{
 			this.flags|=Line.TYPE_GROUND;
 		}
+		this._last_matrix=matrix;
 	}
 
 

@@ -98,14 +98,15 @@ class Player{
 
 
 	void update_ground_movement(){
-		if (this._ground_line!=null){
-			this.x+=this._ground_line.vx;
-			this.y+=this._ground_line.vy;
-			this._leg_left_y+=this._ground_line.vy;
-			this._leg_right_y+=this._ground_line.vy;
-			this._ground_vx=this._ground_line.vx;
-			this._ground_vy=this._ground_line.vy;
-		}
+		// if (this._ground_line!=null){
+		// 	Vector velocity=this._ground_line.get_velocity(this.x);
+		// 	this.x+=velocity.x;
+		// 	this.y+=velocity.y;
+		// 	this._leg_left_y+=velocity.y;
+		// 	this._leg_right_y+=velocity.y;
+		// 	this._ground_vx=velocity.x;
+		// 	this._ground_vy=velocity.y;
+		// }
 		this._ax+=this._speed_x;
 		this._ay+=this._speed_y*(this._ground_line!=null&&(this._ground_line.flags&Line.TYPE_MASK)==Line.TYPE_SLOPE?-this._ground_line.normal_y:1);
 		if (this.y>height){

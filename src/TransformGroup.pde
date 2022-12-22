@@ -74,7 +74,7 @@ class TransformGroup{
 			}
 			else{
 				Line line=Line.data.get(child>>TransformGroup.NEXT_CHILD_ID_SHIFT);
-				line.update_matrix(matrix);
+				line.update(matrix);
 				player.collide(line);
 				child=line._next_child;
 			}
