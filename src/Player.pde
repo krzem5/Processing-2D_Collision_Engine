@@ -115,6 +115,8 @@ class Player{
 			this._vy=0;
 			this._ax=0;
 			this._ay=0;
+			this._leg_left_y=this.y+MAX_LEG_LENGTH;
+			this._leg_right_y=this.y+MAX_LEG_LENGTH;
 		}
 		this._speed_x=0;
 		this._speed_y=0;
