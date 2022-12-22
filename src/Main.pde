@@ -66,12 +66,12 @@ void draw(){
 	if (keys[' ']){
 		player.jump();
 	}
-	// for (Line line:platform){
-	// 	line.rotate(delta_time,960,720);
-	// }
-	// lines[12].move(sin(time*0.001)*100,cos(time*0.001)*250);
+	// root_group.rotate(sin(time*0.001)*0.1,960,540);
+	root_group.translate(0,sin(time*0.001)*50-50);
+	rotating_square.rotate(time*0.001,960,720);
+	moving_platform.translate(sin(time*0.001)*100,cos(time*0.001)*250);
 	player.update(delta_time);
-	root_group.update(delta_time);
+	root_group.update(delta_time,null);
 	player.update_ground_movement();
 	background(0);
 	for (Line line:Line.data){
