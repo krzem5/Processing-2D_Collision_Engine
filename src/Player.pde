@@ -10,7 +10,6 @@ class Player{
 	private Line _ground_line;
 	private float _ground_vx;
 	private float _ground_vy;
-	private boolean _prev_was_on_ground;
 	private float _leg_left_y;
 	private float _leg_right_y;
 	private float _speed_x;
@@ -30,7 +29,6 @@ class Player{
 		this._ground_line=null;
 		this._ground_vx=0;
 		this._ground_vy=0;
-		this._prev_was_on_ground=false;
 		this._leg_left_y=0;
 		this._leg_right_y=0;
 		this._speed_x=0;
@@ -65,6 +63,13 @@ class Player{
 				this._ground_vy=0;
 			}
 		}
+		if (this._ground_line!=null){
+			Vector v=this._ground_line.get_velocity(this.x);
+			this.x+=v.x;
+			this.y+=v.y;
+			this._ax+=v.x;
+			this._ay+=v.y;
+		}
 		this._vx=(this._vx+this._ax*delta_time)*(this.on_ground?FRICTION:AIR_FRICTION);
 		this._vy+=this._ay*delta_time;
 		float m=this._vx*this._vx+this._vy*this._vy;
@@ -75,12 +80,6 @@ class Player{
 		}
 		this.x+=this._vx;
 		this.y+=this._vy;
-		this._prev_was_on_ground=this.on_ground;
-		this.on_ground=false;
-		this._ax=0;
-		this._ay=GRAVITY;
-		this._leg_left_y=this.y+MAX_LEG_LENGTH;
-		this._leg_right_y=this.y+MAX_LEG_LENGTH;
 		if (this.y>height){
 			this.x=width/2;
 			this.y=height/2;
@@ -88,14 +87,17 @@ class Player{
 			this._vy=0;
 			this._ax=0;
 			this._ay=0;
-			this._leg_left_y=this.y+MAX_LEG_LENGTH;
-			this._leg_right_y=this.y+MAX_LEG_LENGTH;
 		}
+		this.on_ground=false;
+		this._ax=0;
+		this._ay=GRAVITY;
 		this._ax+=this._speed_x;
 		this._ay+=this._speed_y*(this._ground_line!=null&&(this._ground_line.flags&Line.TYPE_MASK)==Line.TYPE_SLOPE?-this._ground_line.normal_y:1);
 		this._speed_x=0;
 		this._speed_y=0;
 		this._ground_line=null;
+		this._leg_left_y=this.y+MAX_LEG_LENGTH;
+		this._leg_right_y=this.y+MAX_LEG_LENGTH;
 	}
 
 

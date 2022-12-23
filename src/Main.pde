@@ -9,7 +9,6 @@ final float JUMP_ACCELERATION=600;
 final float LINE_END_SHRINK=10;
 final float MAX_LEG_LENGTH=75;
 final float MAX_COYOTE_TIME=0.05;
-final float MIN_ADJUST_DISTANCE=2.5;
 boolean DEBUG=true;
 
 

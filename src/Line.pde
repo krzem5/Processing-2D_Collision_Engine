@@ -22,6 +22,7 @@ class Line{
 	private float _base_y0;
 	private float _base_x1;
 	private float _base_y1;
+	private TransformMatrix _matrix;
 	private TransformMatrix _last_matrix;
 
 
@@ -74,7 +75,18 @@ class Line{
 		else{
 			this.flags|=Line.TYPE_GROUND;
 		}
-		this._last_matrix=matrix;
+		this._last_matrix=this._matrix;
+		this._matrix=matrix;
+	}
+
+
+
+	Vector get_velocity(float x){
+		float projected_x=map(x,this.x0,this.x1,this._base_x0,this._base_x1);
+		float projected_y=map(x,this.x0,this.x1,this._base_y0,this._base_y1);
+		Vector last_pos=this._last_matrix.multiply(projected_x,projected_y);
+		Vector pos=this._matrix.multiply(projected_x,projected_y);
+		return new Vector(pos.x-last_pos.x,pos.y-last_pos.y);
 	}
 
 
