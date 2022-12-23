@@ -130,7 +130,7 @@ class Player{
 			float dx=line.x0-point.x;
 			float dy=line.y0-point.y;
 			float point_dist=dy*line.dx-dx*line.dy;
-			if ((point_dist>0)!=left_side){
+			if ((point_dist<0)==left_side){
 				point_dist=abs(point_dist);
 				if (point_dist>dist){
 					dist=point_dist;
@@ -141,7 +141,7 @@ class Player{
 				has_intersection=true;
 			}
 		}
-		if (!has_intersection||dist==0){
+		if (!has_intersection||dist<MIN_ADJUST_DISTANCE){
 			return;
 		}
 		dist/=line.length;

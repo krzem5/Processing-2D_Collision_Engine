@@ -61,9 +61,9 @@ class Line{
 		this.y0+=this.normal_x*LINE_END_SHRINK;
 		this.x1+=this.normal_y*LINE_END_SHRINK;
 		this.y1-=this.normal_x*LINE_END_SHRINK;
-		this.dx-=2*abs(this.normal_y)*LINE_END_SHRINK;
-		this.dy-=2*abs(this.normal_x)*LINE_END_SHRINK;
-		this.length-=2*LINE_END_SHRINK;
+		this.dx=this.x1-this.x0;
+		this.dy=this.y1-this.y0;
+		this.length=sqrt(this.dx*this.dx+this.dy*this.dy);
 		this.flags&=~Line.TYPE_MASK;
 		if (abs(this.normal_y)<0.4f){
 			this.flags|=Line.TYPE_WALL;
