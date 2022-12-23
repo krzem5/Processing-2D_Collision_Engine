@@ -140,7 +140,6 @@ class Player{
 					dist=distance;
 				}
 			}
-			println(projected_length)
 		}
 		if (!has_intersection||dist==0){
 			return;
