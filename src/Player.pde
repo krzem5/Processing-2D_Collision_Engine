@@ -118,33 +118,31 @@ class Player{
 				}
 			}
 		}
-		if (!Util.line_rectangle_intersection(this.x-PLAYER_WIDTH/2,this.y-PLAYER_HEIGHT/2,PLAYER_WIDTH,PLAYER_HEIGHT,line.x0,line.y0,line.x1,line.y1)){
-			return;
-		}
-		float p_tlx=this.x-PLAYER_WIDTH/2;
-		float p_tly=this.y-PLAYER_HEIGHT/2;
-		float p_trx=this.x+PLAYER_WIDTH/2;
-		float p_try=this.y-PLAYER_HEIGHT/2;
-		float p_blx=this.x-PLAYER_WIDTH/2;
-		float p_bly=this.y+PLAYER_HEIGHT/2;
-		float p_brx=this.x+PLAYER_WIDTH/2;
-		float p_bry=this.y+PLAYER_HEIGHT/2;
+		Vector[] points={
+			new Vector(this.x-PLAYER_WIDTH/2,this.y-PLAYER_HEIGHT/2),
+			new Vector(this.x+PLAYER_WIDTH/2,this.y-PLAYER_HEIGHT/2),
+			new Vector(this.x-PLAYER_WIDTH/2,this.y+PLAYER_HEIGHT/2),
+			new Vector(this.x+PLAYER_WIDTH/2,this.y+PLAYER_HEIGHT/2)
+		};
 		float dist=0;
-		float point_dist=(line.y0-p_tly)*(line.x1-line.x0)-(line.x0-p_tlx)*(line.y1-line.y0);
-		if ((point_dist>0)!=left_side&&abs(point_dist)>dist){
-			dist=abs(point_dist);
+		boolean has_intersection=false;
+		for (Vector point:points){
+			float dx=line.x0-point.x;
+			float dy=line.y0-point.y;
+			float point_dist=dy*line.dx-dx*line.dy;
+			if ((point_dist>0)!=left_side){
+				point_dist=abs(point_dist);
+				if (point_dist>dist){
+					dist=point_dist;
+				}
+			}
+			float projected_length=-dx*line.dx-dy*line.dy;
+			if (projected_length>=0&&projected_length<=line.length*line.length){
+				has_intersection=true;
+			}
 		}
-		point_dist=(line.y0-p_try)*(line.x1-line.x0)-(line.x0-p_trx)*(line.y1-line.y0);
-		if ((point_dist>0)!=left_side&&abs(point_dist)>dist){
-			dist=abs(point_dist);
-		}
-		point_dist=(line.y0-p_bly)*(line.x1-line.x0)-(line.x0-p_blx)*(line.y1-line.y0);
-		if ((point_dist>0)!=left_side&&abs(point_dist)>dist){
-			dist=abs(point_dist);
-		}
-		point_dist=(line.y0-p_bry)*(line.x1-line.x0)-(line.x0-p_brx)*(line.y1-line.y0);
-		if ((point_dist>0)!=left_side&&abs(point_dist)>dist){
-			dist=abs(point_dist);
+		if (!has_intersection||dist==0){
+			return;
 		}
 		dist/=line.length;
 		if (!left_side){

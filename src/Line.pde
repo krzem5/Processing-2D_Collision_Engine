@@ -11,6 +11,8 @@ class Line{
 	float y0;
 	float x1;
 	float y1;
+	float dx;
+	float dy;
 	float normal_x;
 	float normal_y;
 	float length;
@@ -50,15 +52,18 @@ class Line{
 		this.y0=p0.y;
 		this.x1=p1.x;
 		this.y1=p1.y;
-		this.normal_x=this.y1-this.y0;
-		this.normal_y=this.x0-this.x1;
-		this.length=sqrt(this.normal_x*this.normal_x+this.normal_y*this.normal_y);
-		this.normal_x/=this.length;
-		this.normal_y/=this.length;
+		this.dx=this.x1-this.x0;
+		this.dy=this.y1-this.y0;
+		this.length=sqrt(this.dx*this.dx+this.dy*this.dy);
+		this.normal_x=this.dy/this.length;
+		this.normal_y=-this.dx/this.length;
 		this.x0-=this.normal_y*LINE_END_SHRINK;
 		this.y0+=this.normal_x*LINE_END_SHRINK;
 		this.x1+=this.normal_y*LINE_END_SHRINK;
 		this.y1-=this.normal_x*LINE_END_SHRINK;
+		this.dx-=2*abs(this.normal_y)*LINE_END_SHRINK;
+		this.dy-=2*abs(this.normal_x)*LINE_END_SHRINK;
+		this.length-=2*LINE_END_SHRINK;
 		this.flags&=~Line.TYPE_MASK;
 		if (abs(this.normal_y)<0.4f){
 			this.flags|=Line.TYPE_WALL;

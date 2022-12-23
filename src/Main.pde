@@ -69,8 +69,8 @@ void draw(){
 	rotating_square.rotate(time*0.001,960,720);
 	moving_platform.translate(sin(time*0.001)*100,cos(time*0.001)*250);
 	player.update(delta_time);
-	root_group.update(delta_time,null);
 	background(0);
+	root_group.update(delta_time,null);
 	for (Line line:Line.data){
 		line.draw();
 	}
