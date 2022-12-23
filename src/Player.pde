@@ -129,22 +129,22 @@ class Player{
 		for (Vector point:points){
 			float dx=line.x0-point.x;
 			float dy=line.y0-point.y;
-			float point_dist=dy*line.dx-dx*line.dy;
-			if ((point_dist<0)==left_side){
-				point_dist=abs(point_dist);
-				if (point_dist>dist){
-					dist=point_dist;
-				}
-			}
 			float projected_length=-dx*line.dx-dy*line.dy;
 			if (projected_length>=0&&projected_length<=line.length*line.length){
 				has_intersection=true;
 			}
+			float dot_product=(point.x-line.x0)*line.normal_x+(point.y-line.y0)*line.normal_y;
+			if ((dot_product<0)==left_side){
+				float distance=abs(dot_product);
+				if (distance>dist){
+					dist=distance;
+				}
+			}
+			println(projected_length)
 		}
-		if (!has_intersection||dist<MIN_ADJUST_DISTANCE){
+		if (!has_intersection||dist==0){
 			return;
 		}
-		dist/=line.length;
 		if (!left_side){
 			dist=-dist;
 		}
