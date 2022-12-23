@@ -89,10 +89,8 @@ class Player{
 			this._ay=0;
 		}
 		this.on_ground=false;
-		this._ax=0;
-		this._ay=GRAVITY;
-		this._ax+=this._speed_x;
-		this._ay+=this._speed_y*(this._ground_line!=null&&(this._ground_line.flags&Line.TYPE_MASK)==Line.TYPE_SLOPE?-this._ground_line.normal_y:1);
+		this._ax=this._speed_x;
+		this._ay=GRAVITY+this._speed_y*(this._ground_line!=null&&(this._ground_line.flags&Line.TYPE_MASK)==Line.TYPE_SLOPE?-this._ground_line.normal_y:1);
 		this._speed_x=0;
 		this._speed_y=0;
 		this._ground_line=null;
